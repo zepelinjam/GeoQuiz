@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">География: правда или ложь</string>
+    <string name="true_button">Правда</string>
+    <string name="false_button">Ложь</string>
+    <string name="correct_toast">Верно!</string>
+    <string name="next_button">Далее</string>
+    <string name="back_button">Назад</string>
+    <string name="incorrect_toast">Неправильно</string>
+    <string name="title_activity_cheat">Активити читов</string>
+    <string name="title_startButton">Старт</string>
+    <string name="title_settingsButton">Настройки</string>
+    <string name="title_highscoresButton">Рекорды</string>
+
+    <string name="question_Oceans">Тихий океан больше чем Атлантический.</string>
+    <string name="answer_Oceans">Тихий океан самый большой в Мире!</string>
+
+    <string name="question_Suez">Суэцкий канал соединяет Красное море и Индийский океан.</string>
+    <string name="answer_Suez">Суэцкий канал соединяет Средиземное и Красное моря.</string>
+
+    <string name="question_Nil">Исток реки Нил находится в Египте.</string>
+    <string name="answer_Nil">Исток находится в Руанде.</string>
+
+    <string name="question_Amazonas">Река Амазонка самая длинная на Американском континенте.</string>
+    <string name="answer_Amazonas">Амазонка не только самая длинная в Америке, но и во всём Мире! Ее длинна 6420 км.</string>
+
+    <string name="question_Himalayas">Самые высокие горы на Земле - Гималаи.</string>
+    <string name="answer_Himalayas">Гималаи — высочайшая горная система Земли.</string>
+
+    <string name="question_NY">Нью-Йорк - столица США.</string>
+    <string name="answer_NY">Столица США - город Вашингтон.</string>
+
+    <string name="question_Greenland">Гренландия никому не принадлежит.</string>
+    <string name="answer_Greenland">Остров Гренландия принадлежит Дании.</string>
+
+    <string name="question_WhiteSea">В Белом море - самое тёплое в Мире.</string>
+    <string name="answer_WhiteSea">Самое тёплое море - Красное, его температура около 32°C</string>
+
+    <string name="question_Equator">Длина экватора 1000000км.</string>
+    <string name="answer_Equator">Длина экватора составляет всего 40000км.</string>
+
+    <string name="question_JapanStreets">Улицы в Японии не имеют названий.</string>
+    <string name="answer_JapanStreets">В Японии вместо названия улиц используются номера кварталов.</string>
+
+    <string name="question_Arabia">В Саудовской Аравии нет ни одной реки.</string>
+    <string name="answer_Arabia">Саудовская Аравиия - одна из 17 стран Мира, где нет ни одной реки.</string>
+
+    <string name="question_Nivelir">Прибор для измерения относительной высоты называется топограф.</string>
+    <string name="answer_Nivelir">Прибор для измерения относительной высоты называется нивелир.</string>
+
+    <string name="question_Canada">Канада по площади больше чем США.</string>
+    <string name="answer_Canada">Площадь Канады 9 984 670 км², а площадь США 9 519 431 км²</string>
+
+    <string name="question_Antarctica">Антарктида расположена на северном полюсе земли.</string>
+    <string name="answer_Antarctica">Антарктида расположена на самом Юге Земли.</string>
+
+    <string name="question_Azimuth">Азимут 90° направлен на Запад.</string>
+    <string name="answer_Azimuth">Азимут 90° направлен на Восток.</string>
+</resources>
