@@ -55,4 +55,23 @@
 
     <string name="question_Azimuth">Азимут 90° направлен на Запад.</string>
     <string name="answer_Azimuth">Азимут 90° направлен на Восток.</string>
+
+    <string name="question_Religion">Наиболее распространённая религия в Мире - ислам.</string>
+    <string name="answer_Religion">Наиболее распространённая религия - христианство. Ислам - вторая по распространенности.</string>
+
+    <string name="question_Maory">Маори – коренное население Новой Зеландии.</string>
+    <string name="answer_Maory">Маори - древнейшая народность в Новой Зеландии.</string>
+
+    <string name="question_Chinese">Самый многочисленный этнос в мире - Китайцы.</string>
+    <string name="answer_Chinese">Китацы - самая многочисленная народноть.</string>
+
+    <string name="question_Cities">Могилев, Витебск – это города России.</string>
+    <string name="answer_Cities">Могилев, Витебск – это города Беларуси.</string>
+
+    <string name="question_Bangladesh">Бангладеш - страна Африки.</string>
+    <string name="answer_Bangladesh">Бангладеш - страна Южной Азии.</string>
+
+    <string name="question_AustraliaCapital">Столица Австралии - Канберра.</string>
+    <string name="answer_AustraliaCapital">Столица Австралии - Канберра, а не Мельбурн, как многие ошибочно считают.</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>

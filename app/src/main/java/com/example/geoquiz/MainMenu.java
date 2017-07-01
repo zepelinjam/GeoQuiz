@@ -8,13 +8,19 @@ import android.widget.Button;
 
 public class MainMenu extends AppCompatActivity {
 
+    Button mStartButton;
+    Button mSettingsButton;
+    Button mHighScoresButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        inializeViews();
+
         // обработчик на кнопке "Старт"
-        Button mStartButton = (Button) findViewById(R.id.start_button);
+
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -25,7 +31,7 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
-        Button mSettingsButton = (Button) findViewById(R.id.settings_button);
+
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,13 +39,19 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
-        Button mHighScoresButton = (Button) findViewById(R.id.highscores_button);
+
         mHighScoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // код для открытия рекордов
             }
         });
+    }
+
+    public void inializeViews(){
+        mStartButton = (Button) findViewById(R.id.start_button);
+        mSettingsButton = (Button) findViewById(R.id.settings_button);
+        mHighScoresButton = (Button) findViewById(R.id.highscores_button);
     }
 
 }

@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.geoquiz.Model.Question;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
@@ -115,6 +111,12 @@ public class QuizActivity extends AppCompatActivity {
         questions.add(new Question(R.string.question_Canada, true, R.string.answer_Canada));
         questions.add(new Question(R.string.question_Antarctica, false, R.string.answer_Antarctica));
         questions.add(new Question(R.string.question_Azimuth, false, R.string.answer_Azimuth));
+        questions.add(new Question(R.string.question_Religion, false, R.string.answer_Religion));
+        questions.add(new Question(R.string.question_Maory, true, R.string.answer_Maory));
+        questions.add(new Question(R.string.question_Chinese, true, R.string.answer_Chinese));
+        questions.add(new Question(R.string.question_Cities, false, R.string.answer_Cities));
+        questions.add(new Question(R.string.question_Bangladesh, false, R.string.answer_Bangladesh));
+        questions.add(new Question(R.string.question_AustraliaCapital, true, R.string.answer_AustraliaCapital));
     }
 
     // метод для проверки правильности ответа
