@@ -8,16 +8,16 @@ import android.widget.Button;
 
 public class MainMenu extends AppCompatActivity {
 
-    Button mStartButton;
-    Button mSettingsButton;
-    Button mHighScoresButton;
+    private Button mStartButton;
+    private Button mSettingsButton;
+    private Button mHighScoresButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        inializeViews();
+        initializeViews();
 
         // обработчик на кнопке "Старт"
 
@@ -35,7 +35,10 @@ public class MainMenu extends AppCompatActivity {
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // код для запуска настроек
+                // запуск настроек
+                Intent intent = new Intent();
+                intent.setClass(MainMenu.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -48,7 +51,7 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
-    public void inializeViews(){
+    public void initializeViews(){
         mStartButton = (Button) findViewById(R.id.start_button);
         mSettingsButton = (Button) findViewById(R.id.settings_button);
         mHighScoresButton = (Button) findViewById(R.id.highscores_button);

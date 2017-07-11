@@ -10,6 +10,9 @@
     <string name="title_startButton">Старт</string>
     <string name="title_settingsButton">Настройки</string>
     <string name="title_highscoresButton">Рекорды</string>
+    <string name="switch_light">Тема: "День"</string>
+    <string name="switch_dark">Тема: "Ночь"</string>
+    <string name="switch_answers">Показывать правильные ответы</string>
 
     <string name="question_Oceans">Тихий океан больше чем Атлантический.</string>
     <string name="answer_Oceans">Тихий океан самый большой в Мире!</string>
@@ -32,7 +35,7 @@
     <string name="question_Greenland">Гренландия никому не принадлежит.</string>
     <string name="answer_Greenland">Остров Гренландия принадлежит Дании.</string>
 
-    <string name="question_WhiteSea">В Белом море - самое тёплое в Мире.</string>
+    <string name="question_WhiteSea">Белое море - самое тёплое в Мире.</string>
     <string name="answer_WhiteSea">Самое тёплое море - Красное, его температура около 32°C</string>
 
     <string name="question_Equator">Длина экватора 1000000км.</string>

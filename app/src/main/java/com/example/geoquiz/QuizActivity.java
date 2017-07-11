@@ -4,16 +4,24 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
+
 import com.example.geoquiz.Model.Question;
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,8 +29,8 @@ import java.util.Random;
 public class QuizActivity extends AppCompatActivity {
     private Button mTrueButton; // создание переменной для кнопки True (Правдка)
     private Button mFalseButton; // создание переменной для кнопки False (Ложь)
-    private TextView mQuestionTextView; // создание переменной для текствью (Вопрос)
-    private TextView mScoreTextView; // переменная для счёта
+    private TextSwitcher mQuestionTextSwitcher;
+    private TextSwitcher mScoreTextSwitcher; // переменная для счёта
     private TextView mTimer; // переменная таймера
     private int mScore = 0;
     private int mCurrentIndex; // переменная для счётчика вопросов
@@ -42,8 +50,9 @@ public class QuizActivity extends AppCompatActivity {
 
         initializeQuestions();
         initializeViews();
+        makeMeAnim();
 
-        mScoreTextView.setText(String.valueOf(mScore)); // выводим нулевой счёт в начале игры
+        mScoreTextSwitcher.setText(String.valueOf(mScore)); // выводим нулевой счёт в начале игры
         updateQuestion(); // запуск обновления вопроса на сулчай первого запуска приложения
         mTrueButton.setOnClickListener(new View.OnClickListener() { //обработчик нажатия кнопки true
             @Override
@@ -67,7 +76,8 @@ public class QuizActivity extends AppCompatActivity {
         if (questions.size() != 0){
             mCurrentIndex = mRandom.nextInt(questions.size()); // выбираем рандомный индекс вопроса
             int question = questions.get(mCurrentIndex).getTextResId(); // переменной присваиваем id вопроса
-            mQuestionTextView.setText(question); // устанавливаем в переменную mQuestionTextView вопрос согласно id
+            mQuestionTextSwitcher.setText(getText(question));
+            //mQuestionTextView.setText(question); // устанавливаем в переменную mQuestionTextView вопрос согласно id
             // если таймер работает, то включаем. Актуально только при запуске приложения
             if (mCT != null) {
                 mCT.cancel();
@@ -87,10 +97,49 @@ public class QuizActivity extends AppCompatActivity {
     private void initializeViews() {
         mTrueButton = (Button) findViewById(R.id.true_button); // связываем переменную с id кнопки
         mFalseButton = (Button) findViewById(R.id.false_button); // связываем переменную с id кнопки
-        mScoreTextView = (TextView)findViewById(R.id.score_textwiew); // связываем переменную c текствью (счёт)
-        mQuestionTextView = (TextView)findViewById(R.id.question_text_view); // связываем переменную с id вопроса
+        mScoreTextSwitcher = (TextSwitcher)findViewById(R.id.score_textwiew); // связываем переменную c текствью (счёт)
+        mQuestionTextSwitcher = (TextSwitcher) findViewById(R.id.question_text_view);
         mTimer = (TextView) findViewById(R.id.timer);
         myResources = getResources();
+    }
+
+    // метод, отвечающий за анимацию вопросов и счётчика
+    private void makeMeAnim(){
+        Animation slideInLeftAnimation = AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_in_left);
+        Animation slideOutRightAnimation = AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_out_right);
+
+        mQuestionTextSwitcher.setInAnimation(slideInLeftAnimation);
+        mQuestionTextSwitcher.setOutAnimation(slideOutRightAnimation);
+        mScoreTextSwitcher.setInAnimation(slideInLeftAnimation);
+        mScoreTextSwitcher.setOutAnimation(slideOutRightAnimation);
+
+        mQuestionTextSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                TextView textView = new TextView(QuizActivity.this);
+                textView.setTextSize(20);
+                textView.setTextColor(Color.WHITE);
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                textView.setTypeface(Typeface.DEFAULT_BOLD);
+                textView.setShadowLayer(10, 10, 10, Color.BLACK);
+                return textView;
+            }
+        });
+
+        mScoreTextSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                TextView textView = new TextView(QuizActivity.this);
+                textView.setTextSize(50);
+                textView.setTextColor(Color.WHITE);
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                textView.setTypeface(Typeface.DEFAULT_BOLD);
+                textView.setShadowLayer(10, 10, 10, Color.BLACK);
+                return textView;
+            }
+        });
     }
 
     // иннициализация вопросов
@@ -127,7 +176,7 @@ public class QuizActivity extends AppCompatActivity {
         if (userPressedTrue == answerIsTrue) { // если ответ верен, то пишем что правильно
                 messageResId = R.string.correct_toast;
                 mScore ++; // увличиваем счётчик правильных ответов на 1 если ответ верен
-                mScoreTextView.setText(String.valueOf(mScore)); // увеличиваем счётчик правильных ответов
+            mScoreTextSwitcher.setText(String.valueOf(mScore)); // увеличиваем счётчик правильных ответов
             } else { // если ответ неверен, то пишем что неправильно
                 messageResId = R.string.incorrect_toast;
             }
