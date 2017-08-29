@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">География: правда или ложь</string>
+    <string name="app_name">GeoTest</string>
     <string name="true_button">Правда</string>
     <string name="false_button">Ложь</string>
     <string name="correct_toast">Верно!</string>
@@ -13,21 +13,25 @@
     <string name="switch_light">Тема: "День"</string>
     <string name="switch_dark">Тема: "Ночь"</string>
     <string name="switch_answers">Показывать правильные ответы</string>
+    <string name="switch_sound">Звуки в игре</string>
+    <string name="title_about_button">Информация о приложении</string>
+    <string name="settings">НАСТРОЙКИ</string>
+    <string name="highscores">РЕКОРДЫ</string>
 
     <string name="question_Oceans">Тихий океан больше чем Атлантический.</string>
     <string name="answer_Oceans">Тихий океан самый большой в Мире!</string>
 
     <string name="question_Suez">Суэцкий канал соединяет Красное море и Индийский океан.</string>
-    <string name="answer_Suez">Суэцкий канал соединяет Средиземное и Красное моря.</string>
+    <string name="answer_Suez">На самом деле, Суэцкий канал соединяет Средиземное и Красное моря.</string>
 
     <string name="question_Nil">Исток реки Нил находится в Египте.</string>
-    <string name="answer_Nil">Исток находится в Руанде.</string>
+    <string name="answer_Nil">Исток Нила находится в Руанде.</string>
 
     <string name="question_Amazonas">Река Амазонка самая длинная на Американском континенте.</string>
-    <string name="answer_Amazonas">Амазонка не только самая длинная в Америке, но и во всём Мире! Ее длинна 6420 км.</string>
+    <string name="answer_Amazonas">Амазонка не только самая длинная в Америке, но и во всём Мире! Ее длинна аж 6420 км.</string>
 
     <string name="question_Himalayas">Самые высокие горы на Земле - Гималаи.</string>
-    <string name="answer_Himalayas">Гималаи — высочайшая горная система Земли.</string>
+    <string name="answer_Himalayas">Гималаи - это высочайшая горная система Земли. В нее входит Эверест!</string>
 
     <string name="question_NY">Нью-Йорк - столица США.</string>
     <string name="answer_NY">Столица США - город Вашингтон.</string>
@@ -45,22 +49,22 @@
     <string name="answer_JapanStreets">В Японии вместо названия улиц используются номера кварталов.</string>
 
     <string name="question_Arabia">В Саудовской Аравии нет ни одной реки.</string>
-    <string name="answer_Arabia">Саудовская Аравиия - одна из 17 стран Мира, где нет ни одной реки.</string>
+    <string name="answer_Arabia">Саудовская Аравиия - это одна из 17 стран Мира, где нет ни одной реки.</string>
 
     <string name="question_Nivelir">Прибор для измерения относительной высоты называется топограф.</string>
     <string name="answer_Nivelir">Прибор для измерения относительной высоты называется нивелир.</string>
 
     <string name="question_Canada">Канада по площади больше чем США.</string>
-    <string name="answer_Canada">Площадь Канады 9 984 670 км², а площадь США 9 519 431 км²</string>
+    <string name="answer_Canada">Площадь Канады 9 984 670 км², а площадь США 9 519 431 км².</string>
 
     <string name="question_Antarctica">Антарктида расположена на северном полюсе земли.</string>
-    <string name="answer_Antarctica">Антарктида расположена на самом Юге Земли.</string>
+    <string name="answer_Antarctica">Антарктида расположена на самом Юге Земли - на Южном полюсе.</string>
 
     <string name="question_Azimuth">Азимут 90° направлен на Запад.</string>
     <string name="answer_Azimuth">Азимут 90° направлен на Восток.</string>
 
     <string name="question_Religion">Наиболее распространённая религия в Мире - ислам.</string>
-    <string name="answer_Religion">Наиболее распространённая религия - христианство. Ислам - вторая по распространенности.</string>
+    <string name="answer_Religion">Самая распространённая религия - христианство. Ислам - вторая по распространенности.</string>
 
     <string name="question_Maory">Маори – коренное население Новой Зеландии.</string>
     <string name="answer_Maory">Маори - древнейшая народность в Новой Зеландии.</string>
@@ -69,12 +73,35 @@
     <string name="answer_Chinese">Китацы - самая многочисленная народноть.</string>
 
     <string name="question_Cities">Могилев, Витебск – это города России.</string>
-    <string name="answer_Cities">Могилев, Витебск – это города Беларуси.</string>
+    <string name="answer_Cities">Могилев и Витебск – это города Беларуси.</string>
 
     <string name="question_Bangladesh">Бангладеш - страна Африки.</string>
     <string name="answer_Bangladesh">Бангладеш - страна Южной Азии.</string>
 
     <string name="question_AustraliaCapital">Столица Австралии - Канберра.</string>
     <string name="answer_AustraliaCapital">Столица Австралии - Канберра, а не Мельбурн, как многие ошибочно считают.</string>
+
+    <string name="question_Peninsula">Самый большой полуостров земного шара - Флорида.</string>
+    <string name="answer_Peninsula">Аравийский полуостров — крупнейший в мире, с общей площадью около 3 млн км².</string>
+
+    <string name="question_BrazilCapital">Рио-де-Жанейро - столица Бразилии.</string>
+    <string name="answer_BrazilCapital">На самом деле столица Бразилии - город Бразилиа. Рио-де-Жанейро был столицей до 1960 г.</string>
+
+    <string name="question_HighestWaterfall">Самый высокий водопад - Ниагарский.</string>
+    <string name="answer_HighestWaterfall">Анхель - самый высокий водопад в мире, его общая высота 979 метров (по другим данным 1054 метра).</string>
+
+    <string name="question_Andorra">Андорра - государство находящееся в Европе.</string>
+    <string name="answer_Andorra">Княжество  Андорра - это карликовое государство, которое расположенно между Францией и Испанией.</string>
+
+    <string name="question_Australia_Land">Австралия занимает около 5 % поверхности суши Земли.</string>
+    <string name="answer_Australia_Land">Вся територия Австралии занимает 7 692 024 км², и является шестым по площади государством в мире. Что равно примерно 5% суши Земли.</string>
+
+    <string name="question_Two_Nationality">Канада и Бельгия являются двунациональными государствами.</string>
+    <string name="answer_Two_Nationality">На самом деле, Канада и Бельгия - это двунациональные и двуязычные государства. В Канаде - англичане и французы, а в Бельгии - фламандцы и валлоны.</string>
+
+    <string name="question_Toronto">Торонто - столица Канады.</string>
+    <string name="answer_Toronto">На самом деле, столицой Канады является город Оттава, а не Торронто.</string>
+
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_highscore">HighscoreActivity</string>
 </resources>

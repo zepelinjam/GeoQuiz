@@ -46,7 +46,9 @@ public class MainMenu extends AppCompatActivity {
         mHighScoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // код для открытия рекордов
+                Intent intent = new Intent();
+                intent.setClass(MainMenu.this, HighscoreActivity.class);
+                startActivity(intent);
             }
         });
     }

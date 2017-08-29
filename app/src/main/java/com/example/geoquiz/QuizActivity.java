@@ -1,8 +1,10 @@
 package com.example.geoquiz;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -13,10 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,12 +32,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
-    private Button mTrueButton; // создание переменной для кнопки True (Правдка)
+    private Button mTrueButton; // создание переменной для кнопки True (Правда)
     private Button mFalseButton; // создание переменной для кнопки False (Ложь)
     private TextSwitcher mQuestionTextSwitcher;
     private TextSwitcher mScoreTextSwitcher; // переменная для счёта
     private TextView mTimer; // переменная таймера
-    private int mScore = 0;
+    private int mScore = 0; // переменная для подсчёта очков
+    private int mCorrectAnswers = 0; // переменная для подсчёта кол-ва верных ответов
     private int mCurrentIndex; // переменная для счётчика вопросов
     Random mRandom = new Random(); // создание объекта Random
     private static final String TAG = "QuizActivity"; // Добавление константы TAG
@@ -41,6 +47,11 @@ public class QuizActivity extends AppCompatActivity {
     private String mReason = "";
     private Resources myResources;
     private Drawable mImage;
+    private int mQestionsQuantaty;
+
+    private SharedPreferences mSettings;
+    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES_ANSWERS = "show_answers";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -49,10 +60,12 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         initializeQuestions();
+        mQestionsQuantaty = questions.size();
         initializeViews();
         makeMeAnim();
 
         mScoreTextSwitcher.setText(String.valueOf(mScore)); // выводим нулевой счёт в начале игры
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         updateQuestion(); // запуск обновления вопроса на сулчай первого запуска приложения
         mTrueButton.setOnClickListener(new View.OnClickListener() { //обработчик нажатия кнопки true
             @Override
@@ -70,6 +83,31 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+    // метод для проверки правильности ответа
+    private void checkAnswer(boolean userPressedTrue) {
+        boolean answerIsTrue = questions.get(mCurrentIndex).isAnswerTrue(); // создаем лог. переменную answerIsTrue, присваиваем ей занчение из массива
+        int messageResId = 0;
+
+        if (userPressedTrue == answerIsTrue) { // если ответ верен, то пишем что правильно
+            messageResId = R.string.correct_toast;
+            Toast.makeText(this, messageResId, Toast.LENGTH_SHORT);
+            // вывод уведомления
+            mScore++;
+            mCorrectAnswers ++; // увличиваем счётчик правильных ответов на 1 если ответ верен
+            mScoreTextSwitcher.setText(String.valueOf(mScore)); // увеличиваем счётчик правильных ответов
+        } else { // если ответ неверен, то пишем что неправильно
+            if (mSettings.getBoolean(APP_PREFERENCES_ANSWERS, false)) {
+                mCT.cancel();
+                CorrectAnswerDialog();
+            }
+            else {
+                messageResId = R.string.incorrect_toast;
+                Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show(); // вывод уведомления
+            }
+        }
+        questions.remove(mCurrentIndex);
+    }
+
     // метод для обновления вопросов
     private void updateQuestion(){
         // если вопросы в массиве еще остались
@@ -77,7 +115,6 @@ public class QuizActivity extends AppCompatActivity {
             mCurrentIndex = mRandom.nextInt(questions.size()); // выбираем рандомный индекс вопроса
             int question = questions.get(mCurrentIndex).getTextResId(); // переменной присваиваем id вопроса
             mQuestionTextSwitcher.setText(getText(question));
-            //mQuestionTextView.setText(question); // устанавливаем в переменную mQuestionTextView вопрос согласно id
             // если таймер работает, то включаем. Актуально только при запуске приложения
             if (mCT != null) {
                 mCT.cancel();
@@ -87,7 +124,7 @@ public class QuizActivity extends AppCompatActivity {
         // если вопросов больше нет
         else {
             mCT.cancel(); // останавливаем таймер
-            mReason = "Поздравляем, Вы прошли все вопросы!"; // заголовок диалогового окна
+            mReason = "Поздравляем, Вы дали ответы на все вопросы!"; // заголовок диалогового окна
             mImage = myResources.getDrawable(R.drawable.win); // картина диалогового окна
             gameOverDialog(); // вызов диалога
         }
@@ -142,57 +179,14 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    // иннициализация вопросов
-    private void initializeQuestions() {
-        questions = new ArrayList<>();
-        questions.add(new Question(R.string.question_Oceans, true, R.string.answer_Oceans));
-        questions.add(new Question(R.string.question_Suez, false, R.string.answer_Suez));
-        questions.add(new Question(R.string.question_Nil, false, R.string.answer_Nil));
-        questions.add(new Question(R.string.question_Amazonas,true, R.string.answer_Amazonas));
-        questions.add(new Question(R.string.question_Himalayas,true, R.string.answer_Himalayas));
-        questions.add(new Question(R.string.question_NY, false, R.string.answer_NY));
-        questions.add(new Question(R.string.question_Greenland, false, R.string.answer_Greenland));
-        questions.add(new Question(R.string.question_WhiteSea, false, R.string.answer_WhiteSea));
-        questions.add(new Question(R.string.question_Equator, false, R.string.answer_Equator));
-        questions.add(new Question(R.string.question_JapanStreets, true, R.string.answer_JapanStreets));
-        questions.add(new Question(R.string.question_Arabia, true, R.string.answer_Arabia));
-        questions.add(new Question(R.string.question_Nivelir, false, R.string.answer_Nivelir));
-        questions.add(new Question(R.string.question_Canada, true, R.string.answer_Canada));
-        questions.add(new Question(R.string.question_Antarctica, false, R.string.answer_Antarctica));
-        questions.add(new Question(R.string.question_Azimuth, false, R.string.answer_Azimuth));
-        questions.add(new Question(R.string.question_Religion, false, R.string.answer_Religion));
-        questions.add(new Question(R.string.question_Maory, true, R.string.answer_Maory));
-        questions.add(new Question(R.string.question_Chinese, true, R.string.answer_Chinese));
-        questions.add(new Question(R.string.question_Cities, false, R.string.answer_Cities));
-        questions.add(new Question(R.string.question_Bangladesh, false, R.string.answer_Bangladesh));
-        questions.add(new Question(R.string.question_AustraliaCapital, true, R.string.answer_AustraliaCapital));
-    }
-
-    // метод для проверки правильности ответа
-    private void checkAnswer(boolean userPressedTrue) {
-        boolean answerIsTrue = questions.get(mCurrentIndex).isAnswerTrue(); // создаем лог. переменную answerIsTrue, присваиваем ей занчение из массива
-        int messageResId = 0;
-
-        if (userPressedTrue == answerIsTrue) { // если ответ верен, то пишем что правильно
-                messageResId = R.string.correct_toast;
-                mScore ++; // увличиваем счётчик правильных ответов на 1 если ответ верен
-            mScoreTextSwitcher.setText(String.valueOf(mScore)); // увеличиваем счётчик правильных ответов
-            } else { // если ответ неверен, то пишем что неправильно
-                messageResId = R.string.incorrect_toast;
-            }
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show(); // вывод уведомления
-        questions.remove(mCurrentIndex);
-    }
-
     // метод для таймера обратного отсчёта
     public void setTimer() {
         mCT = new CountDownTimer(11000, 1000) {
             public void onTick(long millisUntilFinished) {
                 mTimer.setText("Время: " + millisUntilFinished / 1000);
-                //here you can have your logic to set text to edittext
             }
             public void onFinish() {
-                mReason = "Вермя вышло :(";
+                mReason = "Вермя вышло!";
                 mImage = myResources.getDrawable(R.drawable.game_over);
                 gameOverDialog(); // вызываем диалоговое окно про конец игры
             }
@@ -203,10 +197,10 @@ public class QuizActivity extends AppCompatActivity {
     public void gameOverDialog (){
         AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
         builder.setTitle(mReason) // заголовок
-                .setMessage("Вы дали: " + mScore + " верных ответов") // сообщение
+                .setMessage("Вы дали " + mScore +" (" + ((mScore*100)/mQestionsQuantaty) +"%) верных ответов.") // сообщение
                 .setIcon(mImage)  //каринка
                 .setCancelable(false) // можно закрыть только по кнопке
-                .setNegativeButton("ОК",
+                .setNeutralButton("ОК",
                         new DialogInterface.OnClickListener() { // по нажатии ...
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel(); // закрыть диалог
@@ -215,6 +209,60 @@ public class QuizActivity extends AppCompatActivity {
                         });
         AlertDialog alert = builder.create();
         alert.show();
+        // отрисовка кнопки по центру
+        final Button neutralbutton = alert.getButton(AlertDialog.BUTTON_NEUTRAL);
+        LinearLayout.LayoutParams neutralButtonLL = (LinearLayout.LayoutParams) neutralbutton.getLayoutParams();
+        neutralButtonLL.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        neutralbutton.setLayoutParams(neutralButtonLL);
+    }
+
+    // диалоговое окно, которое сообщает о верном ответе
+    public void CorrectAnswerDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
+        builder.setTitle("Правильный ответ") // заголовок
+                .setMessage(questions.get(mCurrentIndex).getAnswerResId())
+                .setCancelable(false)
+                .setNeutralButton("Теперь Я знаю!",
+                        new DialogInterface.OnClickListener() { // по нажатии ...
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel(); // закрыть диалог
+                            }
+                        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        // отрисовка кнопки по центру
+        final Button neutralbutton = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+        LinearLayout.LayoutParams neutralButtonLL = (LinearLayout.LayoutParams) neutralbutton.getLayoutParams();
+        neutralButtonLL.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        neutralbutton.setLayoutParams(neutralButtonLL);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        openQuitDialog();
+    }
+
+    private void openQuitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
+        builder.setTitle("Закрыть текущую игру?") // заголовок
+                .setMessage("Прогресс в игре не сохранится!")
+                .setCancelable(true)
+                .setPositiveButton("Да",
+                        new DialogInterface.OnClickListener() { // по нажатии ...
+                            public void onClick(DialogInterface dialog, int id) {
+                                mCT.cancel();
+                                finish(); // закрыть текущуюю игру
+                            }
+                        })
+                .setNegativeButton("Нет",
+                        new DialogInterface.OnClickListener() { // по нажатии ...
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel(); // закрыть диалог
+                            }
+                        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     // создание методов для различных состояний жизненного цикла приложения
@@ -242,5 +290,38 @@ public class QuizActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
+    }
+
+    // иннициализация вопросов
+    private void initializeQuestions() {
+        questions = new ArrayList<>();
+        questions.add(new Question(R.string.question_Oceans, true, R.string.answer_Oceans));
+        questions.add(new Question(R.string.question_Suez, false, R.string.answer_Suez));
+        questions.add(new Question(R.string.question_Nil, false, R.string.answer_Nil));
+        questions.add(new Question(R.string.question_Amazonas,true, R.string.answer_Amazonas));
+        questions.add(new Question(R.string.question_Himalayas,true, R.string.answer_Himalayas));
+        questions.add(new Question(R.string.question_NY, false, R.string.answer_NY));
+        questions.add(new Question(R.string.question_Greenland, false, R.string.answer_Greenland));
+        questions.add(new Question(R.string.question_WhiteSea, false, R.string.answer_WhiteSea));
+        questions.add(new Question(R.string.question_Equator, false, R.string.answer_Equator));
+        questions.add(new Question(R.string.question_JapanStreets, true, R.string.answer_JapanStreets));
+        questions.add(new Question(R.string.question_Arabia, true, R.string.answer_Arabia));
+        questions.add(new Question(R.string.question_Nivelir, false, R.string.answer_Nivelir));
+        questions.add(new Question(R.string.question_Canada, true, R.string.answer_Canada));
+        questions.add(new Question(R.string.question_Antarctica, false, R.string.answer_Antarctica));
+        questions.add(new Question(R.string.question_Azimuth, false, R.string.answer_Azimuth));
+        questions.add(new Question(R.string.question_Religion, false, R.string.answer_Religion));
+        questions.add(new Question(R.string.question_Maory, true, R.string.answer_Maory));
+        questions.add(new Question(R.string.question_Chinese, true, R.string.answer_Chinese));
+        questions.add(new Question(R.string.question_Cities, false, R.string.answer_Cities));
+        questions.add(new Question(R.string.question_Bangladesh, false, R.string.answer_Bangladesh));
+        questions.add(new Question(R.string.question_AustraliaCapital, true, R.string.answer_AustraliaCapital));
+        questions.add(new Question(R.string.question_Peninsula, false, R.string.answer_Peninsula));
+        questions.add(new Question(R.string.question_BrazilCapital, false, R.string.answer_BrazilCapital));
+        questions.add(new Question(R.string.question_HighestWaterfall, false, R.string.answer_HighestWaterfall));
+        questions.add(new Question(R.string.question_Andorra, true, R.string.answer_Andorra));
+        questions.add(new Question(R.string.question_Australia_Land, true, R.string.answer_Australia_Land));
+        questions.add(new Question(R.string.question_Two_Nationality, true, R.string.answer_Two_Nationality));
+        questions.add(new Question(R.string.question_Toronto, false, R.string.answer_Toronto));
     }
 }
